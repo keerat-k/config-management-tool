@@ -1,0 +1,101 @@
+<div class="page">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-back" (click)="goBack()">← Back</button>
+      @if (workflow) {
+        <div class="workflow-info">
+          <span class="workflow-id">{{ workflow.workflowId }}</span>
+          <span class="workflow-name">{{ workflow.workflowName }}</span>
+          <span class="badge">{{ workflow.workflowCategory }}</span>
+        </div>
+      }
+    </div>
+    <div class="toolbar-right">
+      <div class="additional-info-dropdown">
+        <button class="btn btn-secondary" (click)="showAdditionalInfo = !showAdditionalInfo">
+          View Additional Info ▾
+        </button>
+        @if (showAdditionalInfo) {
+          <div class="dropdown-menu">
+            <label>
+              <input type="checkbox" [(ngModel)]="showDataset2" /> Dataset 2
+            </label>
+            <label>
+              <input type="checkbox" [(ngModel)]="showOutputParams" /> Output Parameters
+            </label>
+          </div>
+        }
+      </div>
+      <button class="btn btn-primary" (click)="openAddStep()">+ Add Step</button>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn btn-action" [disabled]="!selectedStep" (click)="duplicateStep()">Duplicate Row</button>
+    <button class="btn btn-action btn-danger" [disabled]="!selectedStep" (click)="deleteStep()">Delete Row</button>
+    <button class="btn btn-action" [disabled]="!selectedStep" (click)="openEditStep()">Edit Row</button>
+  </div>
+
+  <div class="content">
+    @if (loading) {
+      <div class="state-msg">Loading steps...</div>
+    }
+    @if (error) {
+      <div class="state-msg error">{{ error }}</div>
+    }
+    @if (!loading && !error) {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Step ID</th>
+            <th>Step Name</th>
+            <th>Data Operation</th>
+            <th>Dataset</th>
+            <th>Dataset 1 Name</th>
+            <th>Operation Specific Info</th>
+            @if (showDataset2) {
+              <th class="col-dataset2">Dataset 2 Name</th>
+            }
+            @if (showOutputParams) {
+              <th class="col-output">Output Parameters</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (step of steps; track step.stepId; let i = $index) {
+            <tr
+              [class.selected]="selectedStep?.stepId === step.stepId"
+              [class.dragging]="draggedIndex === i"
+              draggable="true"
+              (dragstart)="onDragStart(i)"
+              (dragover)="onDragOver($event, i)"
+              (drop)="onDrop(i)"
+              (click)="selectStep(step)">
+              <td class="mono">{{ step.stepId }}</td>
+              <td>{{ step.stepName }}</td>
+              <td><span class="op-badge {{ getOperationClass(step.dataOperation) }}">{{ step.dataOperation }}</span></td>
+              <td class="mono">{{ step.dataset }}</td>
+              <td>{{ step.dataset1Name }}</td>
+              <td class="op-info">{{ step.operationSpecificInfo }}</td>
+              @if (showDataset2) {
+                <td class="col-dataset2">{{ step.dataset2Name || '—' }}</td>
+              }
+              @if (showOutputParams) {
+                <td class="col-output">{{ step.outputParameters || '—' }}</td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="table-hint">Click to select · Drag to reorder</div>
+    }
+  </div>
+  @if (showModal && workflow) {
+    <app-step-modal
+      [workflowId]="workflow.id"
+      [existingStep]="editingStep"
+      (saved)="onModalSaved($event)"
+      (closed)="onModalClosed()">
+    </app-step-modal>
+  }
+</div>

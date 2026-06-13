@@ -1,0 +1,52 @@
+<div class="page">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <h1>Configuration Management Tool</h1>
+      <span class="subtitle">Workflow Registry</span>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn btn-secondary" (click)="goToDocumentation()">Documentation</button>
+    </div>
+  </div>
+
+  <div class="content">
+    @if (loading) {
+      <div class="state-msg">Loading workflows...</div>
+    }
+    @if (error) {
+      <div class="state-msg error">{{ error }}</div>
+    }
+    @if (!loading && !error) {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Workflow ID</th>
+            <th>Category</th>
+            <th>Workflow Name</th>
+            <th>Business Unit</th>
+            <th>Facility</th>
+            <th>Payload</th>
+            <th>Steps</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (wf of workflows; track wf.id) {
+            <tr
+              [class.selected]="selectedId === wf.id"
+              (click)="selectRow(wf.id)"
+              (dblclick)="openWorkflow(wf.id)">
+              <td>{{ wf.workflowId }}</td>
+              <td><span class="badge">{{ wf.workflowCategory }}</span></td>
+              <td>{{ wf.workflowName }}</td>
+              <td>{{ wf.businessUnit }}</td>
+              <td>{{ wf.facility }}</td>
+              <td class="mono">{{ wf.payload }}</td>
+              <td class="center">{{ wf.stepCount }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <div class="table-hint">Single-click to select · Double-click to open workflow</div>
+    }
+  </div>
+</div>

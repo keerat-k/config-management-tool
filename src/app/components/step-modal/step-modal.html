@@ -1,0 +1,54 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ isEdit ? 'Edit Step' : 'Add Step' }}</h2>
+      <button class="close-btn" (click)="close()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-row">
+        <label>Step Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="form.stepName" placeholder="e.g. Ingest Raw CSV" />
+      </div>
+
+      <div class="form-row">
+        <label>Data Operation <span class="required">*</span></label>
+        <select [(ngModel)]="form.dataOperation">
+          @for (op of dataOperations; track op) {
+            <option [value]="op">{{ op }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Dataset <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="form.dataset" placeholder="e.g. DS-RAW-001" />
+      </div>
+
+      <div class="form-row">
+        <label>Dataset 1 Name <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="form.dataset1Name" placeholder="e.g. production_raw" />
+      </div>
+
+      <div class="form-row">
+        <label>Dataset 2 Name <span class="optional">(optional)</span></label>
+        <input type="text" [(ngModel)]="form.dataset2Name" placeholder="e.g. facility_reference" />
+      </div>
+
+      <div class="form-row">
+        <label>Output Parameters <span class="optional">(optional)</span></label>
+        <input type="text" [(ngModel)]="form.outputParameters" placeholder="e.g. joined_production" />
+      </div>
+
+      <div class="form-row">
+        <label>Operation Specific Info <span class="required">*</span></label>
+        <textarea [(ngModel)]="form.operationSpecificInfo" rows="3" placeholder="e.g. Source: SFTP /data/production/*.csv"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-cancel" (click)="close()">Cancel</button>
+      <button class="btn btn-save" (click)="save()">{{ isEdit ? 'Save Changes' : 'Add Step' }}</button>
+    </div>
+  </div>
+</div>

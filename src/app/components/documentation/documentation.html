@@ -1,0 +1,124 @@
+<div class="page">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-back" (click)="goBack()">← Back</button>
+      <h1>Documentation</h1>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="doc-section">
+      <h2>Overview</h2>
+      <p>The Configuration Management Tool replaces Excel-based workflow configuration files with a structured, database-backed interface. Each workflow defines a sequence of data processing steps that are executed by the Data Profiling Notebook in Azure Databricks to prepare datasets for Power BI dashboards.</p>
+    </div>
+
+    <div class="doc-section">
+      <h2>Workflow List</h2>
+      <p>The main page displays all configured workflows. Each row shows the Workflow ID, Category, Name, Business Unit, Facility, Payload, and the number of steps.</p>
+      <ul>
+        <li><strong>Single-click</strong> a row to select it.</li>
+        <li><strong>Double-click</strong> a row to open the workflow and view its steps.</li>
+        <li>Click <strong>Documentation</strong> in the toolbar to view this page.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Workflow Detail</h2>
+      <p>The detail page shows all steps for a workflow in execution order. Steps are the individual data operations applied to datasets in sequence.</p>
+      <ul>
+        <li><strong>Click</strong> a row to select it and enable the action buttons.</li>
+        <li><strong>Drag</strong> a row to reorder steps.</li>
+        <li><strong>Add Step</strong> opens a modal to create a new step.</li>
+        <li><strong>Edit Row</strong> opens the modal pre-filled with the selected step's data.</li>
+        <li><strong>Duplicate Row</strong> creates a copy of the selected step at the end of the list.</li>
+        <li><strong>Delete Row</strong> permanently removes the selected step.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>View Additional Info</h2>
+      <p>The <strong>View Additional Info</strong> dropdown in the toolbar allows you to show optional columns that are hidden by default to reduce visual clutter.</p>
+      <ul>
+        <li><strong>Dataset 2</strong> — shown in yellow. The secondary input dataset for operations like Join.</li>
+        <li><strong>Output Parameters</strong> — shown in green. The name of the output dataset produced by the step.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h2>Data Operations</h2>
+      <p>Each step has a Data Operation that defines what transformation is applied to the dataset.</p>
+      <div class="op-table">
+        <div class="op-row">
+          <span class="op-badge op-ingest">Ingest</span>
+          <span>Loads raw data from a source system into the pipeline. Specify the source path or connection in Operation Specific Info.</span>
+        </div>
+        <div class="op-row">
+          <span class="op-badge op-addcol">AddCol</span>
+          <span>Adds a new column to the dataset. Specify the column name and default value or formula in Operation Specific Info.</span>
+        </div>
+        <div class="op-row">
+          <span class="op-badge op-renamecol">RenameCol</span>
+          <span>Renames an existing column. Specify old_name and new_name in Operation Specific Info.</span>
+        </div>
+        <div class="op-row">
+          <span class="op-badge op-join">Join</span>
+          <span>Joins two datasets. Specify the join key and join type (LEFT, INNER, etc.) in Operation Specific Info. Dataset 2 is required.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="doc-section">
+      <h2>Fields Reference</h2>
+      <div class="fields-table">
+        <div class="field-row header">
+          <span>Field</span>
+          <span>Description</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Workflow ID</span>
+          <span>Unique identifier for the workflow (e.g. WF-001).</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Workflow Category</span>
+          <span>The type of workflow: Ingestion, Transformation, or Reporting.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Business Unit</span>
+          <span>The Chevron business unit that owns this workflow.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Facility</span>
+          <span>The physical facility or location associated with this workflow.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Payload</span>
+          <span>The name of the data payload or package this workflow processes.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Step ID</span>
+          <span>Auto-generated identifier for the step (e.g. S-001).</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Dataset</span>
+          <span>The dataset identifier this step operates on (e.g. DS-RAW-001).</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Dataset 1 Name</span>
+          <span>The primary input dataset name for this step.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Dataset 2 Name</span>
+          <span>The secondary input dataset, used for Join operations.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Output Parameters</span>
+          <span>The name of the output dataset produced by this step.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-name">Operation Specific Info</span>
+          <span>Additional configuration specific to the data operation type.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
