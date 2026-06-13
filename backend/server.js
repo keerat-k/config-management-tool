@@ -6,7 +6,7 @@ let { workflows } = require('./data');
 const app = express();
 const PORT = 3000;
 
-app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(cors());
 app.use(bodyParser.json());
 
 // GET all workflows

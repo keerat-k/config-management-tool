@@ -28,7 +28,7 @@ export interface Step {
 
 @Injectable({ providedIn: 'root' })
 export class WorkflowService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'https://config-management-api-nk8x.onrender.com/api';
   private http = inject(HttpClient);
 
   getWorkflows(): Observable<Workflow[]> {
